@@ -9,18 +9,19 @@ const input = document.querySelector('[name="email"]');
 const textArea = document.querySelector('[name="message"]');
 const btn = document.querySelector('[type="submit"]');
 
-//disable
-
 //liseners
 form.addEventListener('submit', onSubmit);
 form.addEventListener('input', throttle(onInputForm, 500));
 
-if (input.value !== '' && textArea.value !== '') {
-  btn.removeAttribute('disabled');
-} else {
+//disable
+if (input.value === '' && textArea.value === '') {
   btn.setAttribute('disabled', 'true');
+} else {
+  btn.removeAttribute('disabled');
 }
+
 pushToinputs();
+
 const dataUser = { [input.name]: input.value, [textArea.name]: textArea.value };
 localStorage.setItem(STORAGE_KEY, JSON.stringify(dataUser));
 
@@ -32,13 +33,14 @@ function onSubmit(event) {
 }
 
 function onInputForm(evt) {
-  dataUser[evt.target.name] = evt.target.value;
+  dataUser[input.name] = input.value;
+  dataUser[textArea.name] = textArea.value;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(dataUser));
 
-  if (input.value !== '' && textArea.value !== '') {
-    btn.removeAttribute('disabled');
-  } else {
+  if (input.value === '' && textArea.value === '') {
     btn.setAttribute('disabled', 'true');
+  } else {
+    btn.removeAttribute('disabled');
   }
 }
 
