@@ -26,6 +26,7 @@ function onSubmit(event) {
   // console.log(dataToSend);
   event.target.reset();
   localStorage.removeItem(STORAGE_KEY);
+  console.log(dataUser);
 }
 
 function handlerInput(evt) {
@@ -52,8 +53,8 @@ function handlerTextArea(evt) {
 function pushToinputs() {
   const savedMsg = localStorage.getItem(STORAGE_KEY);
   const currentDatsUser = JSON.parse(savedMsg);
-  console.log(savedMsg);
-  console.log(currentDatsUser);
+  // console.log(savedMsg);
+  // console.log(currentDatsUser);
   if (currentDatsUser) {
     input.value = currentDatsUser.email;
     textArea.value = currentDatsUser.message;
