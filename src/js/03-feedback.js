@@ -41,10 +41,6 @@ function pushToinputs() {
   if (!currentDatsUser) {
     return;
   }
-  if (currentDatsUser.email) {
-    input.value = currentDatsUser.email;
-  }
-  if (currentDatsUser.message) {
-    textArea.value = currentDatsUser.message;
-  }
+  input.value = currentDatsUser.email;
+  textArea.value = currentDatsUser.message;
 }
