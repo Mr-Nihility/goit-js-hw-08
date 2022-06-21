@@ -1,6 +1,7 @@
 import throttle from 'lodash.throttle';
 
 //======================================\\
+//const
 const STORAGE_KEY = 'feedback-form-state';
 
 //refs
@@ -13,13 +14,6 @@ const btn = document.querySelector('[type="submit"]');
 form.addEventListener('submit', onSubmit);
 form.addEventListener('input', throttle(onInputForm, 500));
 
-//disable
-if (input.value === '' && textArea.value === '') {
-  btn.setAttribute('disabled', 'true');
-} else {
-  btn.removeAttribute('disabled');
-}
-
 pushToinputs();
 
 const dataUser = { [input.name]: input.value, [textArea.name]: textArea.value };
@@ -27,6 +21,9 @@ localStorage.setItem(STORAGE_KEY, JSON.stringify(dataUser));
 
 function onSubmit(event) {
   event.preventDefault();
+  if (input.value === '' || textArea.value === '') {
+    return alert('Будь ласка, заповніть всі поля!');
+  }
   console.log(dataUser);
   event.target.reset();
   localStorage.removeItem(STORAGE_KEY);
@@ -36,12 +33,6 @@ function onInputForm(evt) {
   dataUser[input.name] = input.value;
   dataUser[textArea.name] = textArea.value;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(dataUser));
-
-  if (input.value === '' && textArea.value === '') {
-    btn.setAttribute('disabled', 'true');
-  } else {
-    btn.removeAttribute('disabled');
-  }
 }
 
 function pushToinputs() {
