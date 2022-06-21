@@ -13,33 +13,25 @@ const btn = document.querySelector('[type="submit"]');
 
 //liseners
 form.addEventListener('submit', onSubmit);
-input.addEventListener('input', throttle(handlerInput, 500));
-textArea.addEventListener('input', throttle(handlerTextArea, 500));
+form.addEventListener('input', throttle(onInputForm, 500));
 
-const dataUser = {};
-// let dataToSend= [];
+if (input.value !== '' && textArea.value !== '') {
+  btn.removeAttribute('disabled');
+} else {
+  btn.setAttribute('disabled', 'true');
+}
 pushToinputs();
+const dataUser = { [input.name]: input.value, [textArea.name]: textArea.value };
+localStorage.setItem(STORAGE_KEY, JSON.stringify(dataUser));
+
 function onSubmit(event) {
   event.preventDefault();
-  const { email, message } = event.target.elements;
-  // dataToSend.push({ email: email.value, message: message.value }) ;
-  // console.log(dataToSend);
+  console.log(dataUser);
   event.target.reset();
   localStorage.removeItem(STORAGE_KEY);
-  console.log(dataUser);
 }
 
-function handlerInput(evt) {
-  dataUser[evt.target.name] = evt.target.value;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(dataUser));
-
-  if (input.value !== '' && textArea.value !== '') {
-    btn.removeAttribute('disabled');
-  } else {
-    btn.setAttribute('disabled', 'true');
-  }
-}
-function handlerTextArea(evt) {
+function onInputForm(evt) {
   dataUser[evt.target.name] = evt.target.value;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(dataUser));
 
@@ -53,10 +45,13 @@ function handlerTextArea(evt) {
 function pushToinputs() {
   const savedMsg = localStorage.getItem(STORAGE_KEY);
   const currentDatsUser = JSON.parse(savedMsg);
-  // console.log(savedMsg);
-  // console.log(currentDatsUser);
-  if (currentDatsUser) {
+  if (!currentDatsUser) {
+    return;
+  }
+  if (currentDatsUser.email) {
     input.value = currentDatsUser.email;
+  }
+  if (currentDatsUser.message) {
     textArea.value = currentDatsUser.message;
   }
 }
