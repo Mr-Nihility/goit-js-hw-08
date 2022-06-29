@@ -8,7 +8,7 @@ const STORAGE_KEY = 'feedback-form-state';
 const form = document.querySelector('.feedback-form');
 const input = document.querySelector('[name="email"]');
 const textArea = document.querySelector('[name="message"]');
-const btn = document.querySelector('[type="submit"]');
+// const btn = document.querySelector('[type="submit"]');
 
 //liseners
 form.addEventListener('submit', onSubmit);

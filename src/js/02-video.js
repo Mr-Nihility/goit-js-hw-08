@@ -17,4 +17,6 @@ function onPlay(event) {
 
 const sec = localStorage.getItem('currentTime');
 
-player.setCurrentTime(sec);
+if (sec) {
+  player.setCurrentTime(sec);
+}
